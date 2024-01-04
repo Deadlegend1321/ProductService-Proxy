@@ -53,12 +53,23 @@ public class ProductController {
     }
 
     @PutMapping("/{productId}")
-    public String updateProduct(@PathVariable("productId") Long productId, @RequestBody ProductDto productDto) {
-        return "Updating product with id" + productId + "with" + productDto;
+    public ResponseEntity<Product> updateProduct(@PathVariable("productId") Long productId, @RequestBody ProductDto productDto) {
+        Product product = productService.updateProduct(productId, productDto);
+        ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
+        return responseEntity;
+    }
+
+    @PatchMapping("/{productId}")
+    public ResponseEntity<Product> patchProduct(@PathVariable("productId") Long productId, @RequestBody ProductDto productDto) {
+        Product product = productService.updateProduct(productId, productDto);
+        ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
+        return responseEntity;
     }
 
     @DeleteMapping("/{productId}")
-    public String deleteProduct(@PathVariable("productId") Long productId) {
-        return "Deleting product with id" + productId;
+    public ResponseEntity<Product> deleteProduct(@PathVariable("productId") Long productId) {
+        Product product = productService.deleteProduct(productId);
+        ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
+        return responseEntity;
     }
 }
