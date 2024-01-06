@@ -1,6 +1,7 @@
 package com.example.productservice_proxy.controllers;
 
 import com.example.productservice_proxy.dtos.ProductDto;
+import com.example.productservice_proxy.models.Categories;
 import com.example.productservice_proxy.models.Product;
 import com.example.productservice_proxy.services.IProductService;
 import org.springframework.http.HttpStatus;
@@ -47,8 +48,9 @@ public class ProductController {
 
     @PostMapping("")
     public ResponseEntity<Product> addNewProduct(@RequestBody ProductDto productDto) {
-        Product product = productService.addNewProduct(productDto);
-        ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, HttpStatus.CREATED);
+        Product product = getProduct(productDto);
+        Product savedproduct = productService.addNewProduct(product);
+        ResponseEntity<Product> responseEntity = new ResponseEntity<>(savedproduct, HttpStatus.CREATED);
         return responseEntity;
     }
 
@@ -71,5 +73,18 @@ public class ProductController {
         Product product = productService.deleteProduct(productId);
         ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
         return responseEntity;
+    }
+
+    private Product getProduct(ProductDto productDto) {
+        Product product = new Product();
+        product.setId(productDto.getId());
+        product.setTitle(productDto.getTitle());
+        product.setPrice(productDto.getPrice());
+        product.setDescription(productDto.getDescription());
+        product.setImageUrl(productDto.getImage());
+        Categories categories = new Categories();
+        categories.setName(productDto.getCategory());
+        product.setCategory(categories);
+        return product;
     }
 }

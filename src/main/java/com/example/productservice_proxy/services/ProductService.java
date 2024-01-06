@@ -20,7 +20,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+//@Service
 public class ProductService implements IProductService {
 
     //private RestTemplateBuilder restTemplateBuilder;
@@ -64,6 +64,11 @@ public class ProductService implements IProductService {
         return product;
     }
 
+    @Override
+    public Product addNewProduct(Product product) {
+        return null;
+    }
+
     private Product getProduct(ProductDto productDto) {
         Product product = new Product();
         product.setId(productDto.getId());
@@ -77,13 +82,13 @@ public class ProductService implements IProductService {
         return product;
     }
 
-    @Override
-    public Product addNewProduct(ProductDto productDto) {
+//    @Override
+//    public Product addNewProduct(ProductDto productDto) {
 //        RestTemplate restTemplate = restTemplateBuilder.build();
 //        restTemplate.postForEntity("https://fakestoreapi.com/products", productDto, ProductDto.class);
-        ProductDto productDto1 = fakeStoreClient.addNewProduct(productDto);
-        return getProduct(productDto1);
-    }
+//        ProductDto productDto1 = fakeStoreClient.addNewProduct(productDto);
+//        return getProduct(productDto1);
+//    }
 
     @Override
     public Product updateProduct(Long productiId, ProductDto productDto) {
