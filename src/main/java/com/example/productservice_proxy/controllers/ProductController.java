@@ -36,26 +36,26 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<Product> getProductById(@Nullable @RequestHeader(HttpHeaders.AUTHORIZATION) String authToken, @PathVariable("productId") Long productId) {
+    public ResponseEntity<Product> getProductById(@PathVariable("productId") Long productId) {
         try {
-            JwtObject authTokenObj = null;
-            if (authToken != null) {
-                Optional<JwtObject> authObjectOptional = tokenValidator.validateToken(authToken);
-                if (authObjectOptional.isEmpty()) {
-                    return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-                }
-                authTokenObj = authObjectOptional.get();
-            }
-            MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-            headers.add("Accept", "application/json");
-            headers.add("Content-Type", "application/json");
-            headers.add("auth-token", "1234567890");
+//            JwtObject authTokenObj = null;
+//            if (authToken != null) {
+//                Optional<JwtObject> authObjectOptional = tokenValidator.validateToken(authToken);
+//                if (authObjectOptional.isEmpty()) {
+//                    return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+//                }
+//                authTokenObj = authObjectOptional.get();
+//            }
+//            MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+//            headers.add("Accept", "application/json");
+//            headers.add("Content-Type", "application/json");
+//            headers.add("auth-token", "1234567890");
             Product product = productService.getSingleProduct(productId);
             //Product product = productService.getSingleProduct(productId, authTokenObj);
             if (productId < 1) {
                 throw new IllegalArgumentException("Product not found");
             }
-            ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, headers, HttpStatus.OK);
+            ResponseEntity<Product> responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
             return responseEntity;
         }
         catch (Exception e) {
