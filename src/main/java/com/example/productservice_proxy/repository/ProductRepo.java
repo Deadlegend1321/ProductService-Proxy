@@ -12,5 +12,5 @@ import java.util.List;
 public interface ProductRepo extends JpaRepository<Product, Long> {
     Product save(Product product);
 
-    Page<Product> findByTitleEquals(String title, Pageable pageable);
+    List<Product> findByTitleEquals(String title, Pageable pageable);
 }
